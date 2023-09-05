@@ -271,6 +271,11 @@ public class BasicCalculationTypes {
         return totalSum % 10;
     }
 
+    public int fromRomanNumber(String RomanText) {
+
+
+    }
+
 
 }
 
