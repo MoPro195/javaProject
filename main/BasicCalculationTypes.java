@@ -1,7 +1,6 @@
 package main;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BasicCalculationTypes {
 
@@ -271,12 +270,150 @@ public class BasicCalculationTypes {
         return totalSum % 10;
     }
 
-    public int fromRomanNumber(String RomanText) {
 
+    /**
+     * Converts a Roman numeral to a decimal number.
+     *
+     * @param romanNumber The Roman numeral to be converted.
+     * @return The decimal representation of the Roman numeral.
+     * @throws IllegalArgumentException If the input is invalid.
+     */
+    public int fromRomanNumber(String romanNumber) throws IllegalArgumentException {
+        // Create a HashMap to map Roman characters to their decimal values.
 
+        HashMap<String, Integer> romanList = new HashMap<>();
+        String[] romanString = romanNumber.split("");
+        int romanToDecimal = 0;
+        // Populate the HashMap with Roman characters and their values.
+
+        romanList.put("I", 1);
+        romanList.put("V", 5);
+        romanList.put("X", 10);
+        romanList.put("L", 50);
+        romanList.put("C", 100);
+        romanList.put("D", 500);
+        romanList.put("M", 1000);
+        // Check if the input is empty and throw an exception if it is.
+
+        if (romanNumber.isEmpty()) {
+            throw new IllegalArgumentException("The string must have a value");
+        }
+        // Iterate through the Roman characters and calculate the decimal representation.
+
+        for (int index = 0; index < romanString.length - 1; index++) {
+            if (!romanList.containsKey(romanString[index])) {
+                // Throw an exception if an invalid character is encountered.
+
+                throw new IllegalArgumentException("The entry is not found in the Roman alphabet");
+            }
+
+            int currentValue = romanList.get(romanString[index]);
+            int nextValue = romanList.get(romanString[index + 1]);
+
+            if (currentValue < nextValue) {
+                romanToDecimal -= currentValue;
+            } else {
+                romanToDecimal += currentValue;
+            }
+        }
+
+        // Add the value of the last character.
+
+        romanToDecimal += romanList.get(romanString[romanString.length - 1]);
+
+        return romanToDecimal;
+    }
+
+    /**
+     * This method calculates all combinations of values a, b, and c where the formula
+     * a^2 + b^2 = c^2 holds true, with each value starting from 1 and going up to 99.
+     *
+     * @return A Set containing the unique products of a, b, and c that satisfy the equation.
+     */
+    public Set<Integer> combinatorics() {
+        Set<Integer> numberSet = new HashSet<>();
+
+        for (int a = 1; a < 100; a++) {
+            int aSquared = a * a;
+            for (int b = a; b < 100; b++) {
+                int bSquared = b * b;
+                int cSquared = aSquared + bSquared;
+                if (isPerfectSquare(cSquared)) {
+                    int c = (int) Math.sqrt(cSquared);
+                    if (c < 100) {
+                        numberSet.add(a * b * c);
+                    }
+                }
+            }
+        }
+
+        return numberSet;
+    }
+
+    /**
+     * This method checks if a given number is a perfect square.
+     *
+     * @param num The number to be checked.
+     * @return true if 'num' is a perfect square, false otherwise.
+     */
+    private boolean isPerfectSquare(int num) {
+        int sqrt = (int) Math.sqrt(num);
+        return sqrt * sqrt == num;
+    }
+
+    public Set<Integer> combinatoric() {
+        Set<Integer> numberSet = new HashSet<>();
+
+        for (int a = 1; a < 99; a++) {
+            int aSquared = a * a;
+
+            for (int b = a; b < 99; b++) {
+                int bSquared = b * b;
+
+                for (int c = b; c < 99; c++) {
+                    int cSquared = c * c;
+                    int productAB = aSquared * bSquared;
+                    int productCD = cSquared * (aSquared + bSquared);
+
+                    if (productAB == productCD) {
+                        numberSet.add(productAB);
+                    }
+                }
+            }
+        }
+        return numberSet;
     }
 
 
+    public Set<Integer> findArmstrongNumbers() {
+        Set<Integer> armstrongNumbers = new HashSet<>();
+        final int MAX_DIGIT = 9;
+
+        for (int digitX = 1; digitX <= MAX_DIGIT; digitX++) {
+            int xCubed = digitX * digitX * digitX;
+
+            for (int digitY = digitX; digitY <= MAX_DIGIT; digitY++) {
+                int yCubed = digitY * digitY * digitY;
+
+                for (int digitZ = digitY; digitZ <= MAX_DIGIT; digitZ++) {
+                    int zCubed = digitZ * digitZ * digitZ;
+
+                    if (digitX * digitY * digitZ == xCubed + yCubed + zCubed) {
+                        armstrongNumbers.add(digitX * 100 + digitY * 10 + digitZ);
+                    }
+                }
+            }
+        }
+
+        return armstrongNumbers;
+    }
+
 }
+
+
+
+
+
+
 
 

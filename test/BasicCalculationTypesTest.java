@@ -143,7 +143,26 @@ public class BasicCalculationTypesTest {
 
     }
 
+    @Test
+    public void testValidRomanNumber() {
 
+        String romanNumber = "IX"; // Dezimalwert: 9
+        int expectedDecimal = 9;
+        int result = calculator.fromRomanNumber(romanNumber);
+        assertEquals(expectedDecimal, result);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testEmptyInput() {
+        String romanNumber = "";
+        calculator.fromRomanNumber(romanNumber);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidRomanNumber() {
+        String romanNumber = "XYZ"; // Ungültiges Zeichen "X"
+        calculator.fromRomanNumber(romanNumber);
+    }
 
 
 }
